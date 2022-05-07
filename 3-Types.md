@@ -42,6 +42,49 @@
   
 - Properties are just like methods. This means that you can't modify the return value of a property of  value type.
 
+---
+
+### Indexers
+- Provide an access mechanism to objects similar to array access by brackets.`[]`
+- You can treat indexers like properties, methods that accept arguments of any type.
+- Use `this[` *arg(s)* `]` to access indexers. 
+- Indexers are overloadable.
+  
+  ```csharp
+  private int[]  _v = new int[10];
+  private int[,] _m = new int[10,10];
+  
+  //Type 1️⃣ syntactic sugar but not get
+  public int this[int index] => _v[index];
+
+  //Type 2️⃣ - like properties
+  public int this[int index]
+  {   
+      get => _v[index];
+      set => _v[index] = value;
+  }
+  
+  //Type 3️⃣ - multi-dimensional
+  public int this[int d1, int d2]
+  {
+      get => _m[d1, d2];
+      set => _m[d1, d2] = value;
+  }
+  
+  //Type 4️⃣ - any type of argument is possible
+  public int this[string s]
+  {
+      get => s;
+  }  
+  
+  //Type 5️⃣ - indexers are like properties. Doing a conditional evaluation for example
+  public int? this[int i]
+  {
+      get => (i < 0 || i >= _v.Length) ? null : _v[i];
+  }
+  ```
+  
+
 
 ***To be continued ...*** 
 
