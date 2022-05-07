@@ -8,7 +8,7 @@
 - This documentation contains the **Important Points** and **My Experiences** while learning about C#. 
 - In the future, it can be used as a quick tutorial.
 - This repository is gradually completed and updated over time.
-> [!NOTE]
+> Note:
 > - This repository is gradually completed and updated over time.
 > - I decided to document on the Github when I reached the middle of ***step2***. So ***step1*** and the beginning part of the ***step2*** are **omitted.**
 
