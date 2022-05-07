@@ -13,9 +13,9 @@
   ```
   - You can initialize the property in the declaration or constructor.
 
-  ```csharp
-  public List<int> points { get; set;} = new List<int>();
-  ```
+    ```csharp
+    public List<int> points { get; set;} = new List<int>();
+    ```
   
   - If you also delete the `set` *accessor*, you will have a read-only property that you can not reassign after construction is completed.
 
