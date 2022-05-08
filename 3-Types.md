@@ -83,9 +83,86 @@
       get => (i < 0 || i >= _v.Length) ? null : _v[i];
   }
   ```
-  
+---
+### Opertatos
+- You can modify the operator function in types by *operator overloading*.
+- Most of the operators are overloadable, even `true` or `false` operators.
+- These operators MUST be overloaded in pairs:
+  - `==` and `!=` pair
+  -  `<` and `>` pair
+  -  `<=` and `>=` pair
+- These operators are not overloadable.
+  - `^x, x = y, x.y, x?.y, c ? t : f, x ?? y, x ??= y, x..y, x->y, =>, f(x), as, await, checked, unchecked, default, delegate, is, nameof, new, sizeof, stackalloc, switch, typeof, with`
+- Operator overloading **MUST**:
+  - Be `public static`
+  - At least **one** parameter of the type of the defining type
+the defining type (sample 3)
+    - Order of types matter ie. `Tyep1+Type2` is different from `Type2+Type1`
+    - You can overload both
+```csharp
+//1- unary operator overloading sample: 
+public static Counter operator ++(Counter x) { /*body*/ }
 
+//2- binary operator overloading sample: 
+//evaluates x+y both of the Counter type.
+public static Counter operator +(Counter x, Counter y)
+{
+    return new Counter(x.Count + y.Count);
+}
 
+//3- at least one parameter MUST be of the type of the defining class
+//(here Counter is the defining class) <Counter instance> + <an int number>
+public static Counter operator +(Counter x, int y) { /*body*/ }
+```
+- To define a type conversion operator (casting), we use `explicit` or `implicit` keywords with the type to be cast as the operator method name. 
+  - `implicit` should be used when there is a standard built-in *type promotion* available(e.g. int->long,...)
+    - If no standard type promotion available you may encounter exceptions or weird behavior
+    - Our first choice is to use `explicit`. We use `implicit` just when it makes sense 
+```csharp
+// is used to resolve: (int)counter
+public static explicit operator int(Counter x)
+{
+    return x.Count;
+}
+
+// is used to resolve implicit conversions like:
+// <int or a type with a built-in conversion
+//      available of int such as long, double,... > + counter
+public static explicit operator int(Counter x)
+{
+    return x.Count;
+}
+```
+- `true` and `false` operators are also overloadable. Their main purpose is to define the condition that is not true neither false. 
+  - After the `nullable` feature is added to C#, overloading these operators may not be reasonable.
+  - You can overload `implicit` cast to `bool` to cover any reasonable condition about booleans.
+    - you can combine `?` with the type in to define a `nullable` conversion operator
+```csharp
+// implicit cast to nullable bool
+public static implicit operator bool?(Counter x)
+{
+    if (x.x > 0)
+        return true;
+    if (x.x < 0)
+        return false;
+    return null;
+}
+
+//Example above without nullable support
+public static implicit operator bool(Counter x)
+{
+    if (x.x >= 0)
+        return true;
+    return false;
+}
+
+//to overload true or false
+public static bool operator true(Counter x)
+{
+    //body with return type of bool
+}
+```
+---
 ***To be continued ...*** 
 
 `#cs_internship` `#csharp` `#step2`
