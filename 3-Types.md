@@ -95,8 +95,7 @@
   - `^x, x = y, x.y, x?.y, c ? t : f, x ?? y, x ??= y, x..y, x->y, =>, f(x), as, await, checked, unchecked, default, delegate, is, nameof, new, sizeof, stackalloc, switch, typeof, with`
 - Operator overloading **MUST**:
   - Be `public static`
-  - At least **one** parameter of the type of the defining type
-the defining type (sample 3)
+  - At least **one** parameter of the type of the defining type (sample 3) is needed.
     - Order of types matter ie. `Tyep1+Type2` is different from `Type2+Type1`
     - You can overload both
 ```csharp
