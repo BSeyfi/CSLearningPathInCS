@@ -168,6 +168,37 @@ public static bool operator true(Counter x)
 - With event subscription, the event source object couples to the event sink object.
 - Events are related to `delagte`s. So we will talk more about them in later chapters. The author of the book has talked a little about events here because an event is, after all, a type.
 ---
+### Nested Types
+- They're used to declare a type inside the scope of another.
+- They're useful for implementing a better encapsulation.
+- Their default access is `private`. Although you can give them permissive access(like `public`), they're not designed to be used in this way, and you may violate the *Code quality rule: Nested types should not be visible.*
+- **Nested types:**
+  - Should not be visible(accessible) outside of the containing(parent/outer) type.
+  - Don't use them for logical grouping.
+  - Don't use them to avoid name collision. 
+    - (`namespace` is for this job.)
+- To refer to the outer type, you can initialize the inner/nested type with the outer/containing type instance. (refer to code below)
+```csharp
+public class Container //Outer Type
+{
+    public Container()
+    {
+        //this, here, refers to the defining type== Container class instance
+        var nested = new Nested(this);
+    }
+    public class Nested // Inner Type
+    {
+        private Container parent;
+        public Nested(Container parent)
+        {
+            //this, here, points to the defining type== Nested class instance
+            this.parent = parent;
+        }
+    }
+}
+```
+
+---
 ***To be continued ...*** 
 
 `#cs_internship` `#csharp` `#step2`
