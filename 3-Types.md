@@ -162,6 +162,12 @@ public static bool operator true(Counter x)
 }
 ```
 ---
+### Events
+- You can define *events* for `struct` or `class`.
+- Event model is a way to broadcast notifications to the subscribed objects.
+- With event subscription, the event source object couples to the event sink object.
+- Events are related to `delagte`s. So we will talk more about them in later chapters. The author of the book has talked a little about events here because an event is, after all, a type.
+---
 ***To be continued ...*** 
 
 `#cs_internship` `#csharp` `#step2`
