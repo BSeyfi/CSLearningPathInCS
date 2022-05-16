@@ -16,7 +16,7 @@
     ```csharp
     public List<int> points { get; set;} = new List<int>();
     ```
-  
+
   - If you also delete the `set` *accessor*, you will have a read-only property that you can not reassign after construction is completed.
 
     ```csharp
@@ -24,7 +24,7 @@
     ```
 
 - `value` *contextual keyword* is used as the input parameter for `set` *accessor*.
-  
+
   ```csharp
   //_num is a field
   set { _num = value; }
@@ -34,12 +34,12 @@
   set => firstName = value;
   ```
 - `set` or `get` *accessors* access modifier can be restrictive but not permissive than property access modifier:
-  
+
   ```csharp
   public int N  { get; private set;} //    is valid
   private int N { get; public  set;} //    is not valid
   ```
-  
+
 - Properties are just like methods. This means that you can't modify the return value of a property of  value type.
 
 ---
@@ -47,13 +47,13 @@
 ### Indexers
 - Provide an access mechanism to objects similar to array access by brackets.`[]`
 - You can treat indexers like properties, methods that accept arguments of any type.
-- Use `this[` *arg(s)* `]` to access indexers. 
+- Use `this[` *arg(s)* `]` to access indexers.
 - Indexers are overloadable.
-  
+
   ```csharp
   private int[]  _v = new int[10];
   private int[,] _m = new int[10,10];
-  
+
   //Type 1️⃣ syntactic sugar but not get
   public int this[int index] => _v[index];
 
@@ -63,20 +63,20 @@
       get => _v[index];
       set => _v[index] = value;
   }
-  
+
   //Type 3️⃣ - multi-dimensional
   public int this[int d1, int d2]
   {
       get => _m[d1, d2];
       set => _m[d1, d2] = value;
   }
-  
+
   //Type 4️⃣ - any type of argument is possible
   public int this[string s]
   {
       get => s;
   }  
-  
+
   //Type 5️⃣ - indexers are like properties. Doing a conditional evaluation for example
   public int? this[int i]
   {
@@ -99,10 +99,10 @@
     - Order of types matter ie. `Tyep1+Type2` is different from `Type2+Type1`
     - You can overload both
 ```csharp
-//1- unary operator overloading sample: 
+//1- unary operator overloading sample:
 public static Counter operator ++(Counter x) { /*body*/ }
 
-//2- binary operator overloading sample: 
+//2- binary operator overloading sample:
 //evaluates x+y both of the Counter type.
 public static Counter operator +(Counter x, Counter y)
 {
@@ -113,10 +113,10 @@ public static Counter operator +(Counter x, Counter y)
 //(here Counter is the defining class) <Counter instance> + <an int number>
 public static Counter operator +(Counter x, int y) { /*body*/ }
 ```
-- To define a type conversion operator (casting), we use `explicit` or `implicit` keywords with the type to be cast as the operator method name. 
+- To define a type conversion operator (casting), we use `explicit` or `implicit` keywords with the type to be cast as the operator method name.
   - `implicit` should be used when there is a standard built-in *type promotion* available(e.g. int->long,...)
     - If no standard type promotion available you may encounter exceptions or weird behavior
-    - Our first choice is to use `explicit`. We use `implicit` just when it makes sense 
+    - Our first choice is to use `explicit`. We use `implicit` just when it makes sense
 ```csharp
 // is used to resolve: (int)counter
 public static explicit operator int(Counter x)
@@ -132,7 +132,7 @@ public static explicit operator int(Counter x)
     return x.Count;
 }
 ```
-- `true` and `false` operators are also overloadable. Their main purpose is to define the condition that is not true neither false. 
+- `true` and `false` operators are also overloadable. Their main purpose is to define the condition that is not true neither false.
   - After the `nullable` feature is added to C#, overloading these operators may not be reasonable.
   - You can overload `implicit` cast to `bool` to cover any reasonable condition about booleans.
     - you can combine `?` with the type in to define a `nullable` conversion operator
@@ -175,7 +175,7 @@ public static bool operator true(Counter x)
 - **Nested types:**
   - Should not be visible(accessible) outside of the containing(parent/outer) type.
   - Don't use them for logical grouping.
-  - Don't use them to avoid name collision. 
+  - Don't use them to avoid name collision.
     - (`namespace` is for this job.)
 - To refer to the outer type, you can initialize the inner/nested type with the outer/containing type instance. (refer to code below)
 ```csharp
@@ -199,6 +199,119 @@ public class Container //Outer Type
 ```
 
 ---
-***To be continued ...*** 
+## Interfaces
+### What are *interfaces* in C#?
+*Interface* is a type to declare some services without any implementation. It can be used by different types with different implementation.
+### How can we use *interfaces* ?
+A `class` or a `struct` can use interfaces by declaring them after the type name, following with a colon. The type must implement all members of interfaces.
+```csharp
+public interface IService
+{
+    public void M();//Just declaration with no implementation
+}
+
+public class ClassX : IService
+{
+    /* Class body*/
+
+    // Implementation of interface members
+    public void M()
+    {
+        //body
+    }
+}
+```
+**Note:** A type can implement multiple interfaces by using a comma(`,`) separating interfaces name.
+```csharp
+
+public class ClassX : IService1, IService2, IService3
+{
+    /* Class body*/
+}
+```
+### What can be declared as an interface member?
+- **Before C# 8:**
+  - Methods
+  - Properties
+  - Indexers
+  - Events
+- **Added after C# 8:**
+  - Constants
+  - Operators
+  - Static constructor
+  - Nested types
+  - Static fields, methods, properties, indexers, and events
+  - Member declarations with the explicit implementation
+  - Explicit access modifiers (the default access is `public`)
+- **Beginning with C# 11**
+  - `static abstract` can usable to all types except fields.
+
+### Some important notes in using interfaces:
+  - You can't declare non-static fields in interfaces.
+  - You can't change the *access modifier* when implementing.
+  - You can add a `get` or `set` property implementation if it's not declared in the interface
+    ```csharp
+    interface IZ
+    {
+        public string Name { get; } // set is not declared
+    }
+    class ID : IZ
+    {
+        private string _name = "";
+        public string Name
+        {
+            get => _name;
+            private set => _name = value;// as set is not declared in interface,
+            //we can add it with arbitrary access modifier
+        }
+    }
+    ```
+  - An interface `private` members must have an implementation.
+  - Any member of an interface can have a *default implementation*.
+  - To use a member of an interface, you should implement it in your type(like `class`) regardless of whether the member has been implemented in the `interface`(has a *default implementation*) or not.
+  - All not-implemented members of an interface MUST be implemented in the target type.
+  - To implement an `interface` member in a type(like `class`, `struct`,...), both members must have the same signature (same member name and same parameter types)
+  - If two interfaces used in a type have the same member, you should implement them explicitly by the interface name preceding the member:
+    - Syntax <*interface name*>.<*member name*>
+    - To call the *explicit member* you should cast the instance to the related interface or use the `as` keyword like the following example:
+
+  ```csharp
+  interface IY
+  {
+      public void MyName();
+  }
+  interface IZ
+  {
+      public void MyName();
+  }
+
+  class MultipleImp : IY, IZ
+  {
+      void IY.MyName() //explicit implementation
+      {
+          Console.WriteLine("I'm the IY.MyName implementation");
+      }
+      void IZ.MyName() //explicit implementation
+      {
+          Console.WriteLine("I'm the IZ.MyName implementation");
+      }
+  }
+
+  //=====RUN=====
+  var multImp=new  MultipleImp();
+
+  (multImp as IY).MyName(); //can not call directly. use the `as` keyword or cast
+  (multImp as IZ).MyName(); //can not call directly. use the `as` keyword or cast
+  ```
+
+  Output:
+
+  ```
+  I'm the IY.MyName implementation
+  I'm the IZ.MyName implementation
+  ```
+
+---
+***To be continued ...***
 
 `#cs_internship` `#csharp` `#step2`
