@@ -220,10 +220,14 @@ public class ClassX : IService
         //body
     }
 }
+
+//=====To access interface member defined in a type=====
+var classX = new ClassX();
+classX.M(); // How to call the member of interface from a class instance
 ```
 **Note:** A type can implement multiple interfaces by using a comma(`,`) separating interfaces name.
-```csharp
 
+```csharp
 public class ClassX : IService1, IService2, IService3
 {
     /* Class body*/
@@ -266,7 +270,8 @@ public class ClassX : IService1, IService2, IService3
         }
     }
     ```
-  - An interface `private` members must have an implementation.
+
+  - The `private` members of an interface must have an implementation.
   - Any member of an interface can have a *default implementation*.
   - To use a member of an interface, you should implement it in your type(like `class`) regardless of whether the member has been implemented in the `interface`(has a *default implementation*) or not.
   - All not-implemented members of an interface MUST be implemented in the target type.
