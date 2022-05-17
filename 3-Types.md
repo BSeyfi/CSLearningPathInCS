@@ -323,7 +323,7 @@ public class ClassX : IService1, IService2, IService3
 - Enumerations are for defining named values (flags, etc.) and combining them.
 - Enumerations bring us code readability. Searching in codes and modifying flags gets easier with enumerations.
 
-## How to define an `enum` type?
+### How to define an `enum` type?
 
 Enumerations utilize integral *value type*  **constants** for the underlying layer.
 - to define an `enum` type, you can list some names:
