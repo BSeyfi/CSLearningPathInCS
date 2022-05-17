@@ -317,6 +317,119 @@ public class ClassX : IService1, IService2, IService3
   ```
 
 ---
+##  Enums
+### What is the use of *enum* type?
+- *Enum* (short for enumeration) is a type to define *named values*.
+- Enumerations are for defining named values (flags, etc.) and combining them.
+- Enumerations bring us code readability. Searching in codes and modifying flags gets easier with enumerations.
+
+## How to define an `enum` type?
+
+Enumerations utilize integral *value type*  **constants** for the underlying layer.
+- to define an `enum` type, you can list some names:
+
+```csharp
+//===Defining an enum===
+public enum FourElements
+{
+    Fire , //compiler may give it value == 0
+    Air  , // also == 1
+    Water, // also == 2
+    Earth  // also == 3
+}
+
+//===An example of using an enum===
+FourElements element = FourElements.Fire;
+
+if (element == FourElements.Fire)
+    Console.WriteLine("The elemnt is Fire");
+```
+
+- members of an enumeration are not mutually exclusive by default, so to define them as flags, you should give them mutually exclusive values manually:
+
+```csharp
+public enum FourElements
+{
+    Fire  = 1 << 1, // = 0b0000_0001
+    Air   = 1 << 2, // = 0b0000_0010
+    Water = 1 << 3, // = 0b0000_0100
+    Earth = 1 << 4, // = 0b0000_1000  
+}
+```
+
+- underlying value type for an enumeration is `int`. As `int` has 32-bits, to define a flag set with more than 32 flags, you should use `long` as the underlying type. Define the underlying data type by using a colon as follow:
+
+```csharp
+public enum ALotNumberOfFlags : long
+{/*body*/}
+```
+- `enum` type members are practically constants.
+- you can combine them by bitwise-OR operator `|`. Exclusion is also possible in addition to any arithmetic or logical operation.
+- For checking flags' presence in an enum variable, use the `HasFlag` method :
+
+```csharp
+public enum Colors
+{
+    Black   = 0 ,
+    Red     = 1 ,          //0b0000_0001
+    Green   = 2 ,          //0b0000_0010
+    Blue    = 4 ,          //0b0000_0100
+
+    NoColor = 128 ,        //0b1000_0000
+
+    Yellow  = Green | Red, //0b0011
+
+}
+Colors weirdYellow  =  Colors.NoColor | Colors.Yellow;
+Colors normalYellow =  Colors.Yellow;
+
+Console.WriteLine(weirdYellow.HasFlag(Colors.Red));  //-->True
+Console.WriteLine(normalYellow.HasFlag(Colors.Red)); //-->True
+
+```
+
+```py
+<enumX_instance>.HasFlag(<enumX_member>)
+is equaivallent to
+(<enumX_instance> & <enumX_member> ) == <enumX_member>
+```
+
+- `[System.Flags]` attribute provides functionalities dedicated to flags. By employing this attribute before defining the `enum,` compiler will treat enum as genuine flags. Decomposition into `string` gets possible.
+Use it when you want to perform logical operations on mutually exclusive flags.
+  - Nothing wrong will happen if you do not use this attribute. Its principal purpose is to decompose an `enum` member into strings.
+
+```csharp
+[System.Flags]
+public enum ColorsF
+{
+    Red     = 1 ,          //0b0000_0001
+    Green   = 2 ,          //0b0000_0010
+    Blue    = 4 ,          //0b0000_0100
+}
+
+public enum Colors
+{
+    Red     = 1 ,          //0b0000_0001
+    Green   = 2 ,          //0b0000_0010
+    Blue    = 4 ,          //0b0000_0100
+}
+
+//===Run Sample===
+Colors  Yellow   =  Colors.Green  | Colors.Red;
+ColorsF YellowF  =  ColorsF.Green | ColorsF.Red;
+
+Console.WriteLine(Yellow.ToString());
+Console.WriteLine(YellowF.ToString());
+```
+
+Output:
+
+```
+3
+Red, Green
+```
+
+---
 ***To be continued ...***
 
 `#cs_internship` `#csharp` `#step2`
