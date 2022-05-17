@@ -201,7 +201,9 @@ public class Container //Outer Type
 ---
 ## Interfaces
 ### What are *interfaces* in C#?
-*Interface* is a type to declare some services without any implementation. It can be used by different types with different implementation.
+*Interface* is a type to declare some services without any implementation\*. It can be used by different types with different implementation.
+
+\* Starting with C# 8.0, interfaces can define *defualt implementation*. (more details later)
 ### How can we use *interfaces* ?
 A `class` or a `struct` can use interfaces by declaring them after the type name, following with a colon. The type must implement all members of interfaces.
 ```csharp
