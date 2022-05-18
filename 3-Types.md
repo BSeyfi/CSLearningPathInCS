@@ -481,6 +481,68 @@ Sheep
 - To pass it as an argument, the corresponding parameter type can be `object`.
 
 - It is recommended to use *named struct* or class to store a query result or pass an anonymous type outside the method boundaries.
+
+---
+## Partial Types and Methods
+### Partial Types
+- You can define a type in multiple files using the `partial` keyword.
+- It's supported for `class`, `struct`, `interface` and `record` types.
+- *Partial types* may contain *partial method*s.
+- It can be useful while working on:
+  1. large projects
+  2. automatically generated codes (like Windows forms designer)
+
+File_1.cs contains the first part of `PartialClass`
+
+```csharp
+namespace PartialTypes
+{
+    public partial class PartialClass
+    {
+        public partial void PM(); //PM has declared here
+    }
+}
+```
+
+File_2.cs contains the second part of `PartialClass`
+
+```csharp
+namespace PartialTypes
+{
+    public partial class PartialClass
+    {
+        int index;
+        public void M()
+        {/*body*/}
+        public partial void PM() // PM has defined here
+        {/*body*/}
+    }
+}
+```
+
+### Partial Methods
+*Partial methods* allow us to declare a method in one file and implement it in the other one.
+- It enables developers to declare method hooks with no implementation defined. Developers can decide later to add the implementation or not.**\***
+- Declared but not implemented methods will be discarded from the compilation process.
+- Both declaration and implementation definition signatures **MUST** be the same.
+- To define a method as partial, use the `partial` keyword.
+
+
+**\*** If **all** the **following conditions** are met, you are eligible to omit the Implementation of a partial method, **otherwise you can not** :
+- has no access modifier (`public`, `private` and so on)
+- returns `void`
+- has no parameter with `out` modifier
+- has not defined with  `virtual`, `override`, `sealed`, `new`, or `extern` modifiers
+
+
+
+`partial` is **not applicable** to:
+- constructors
+- finalizers
+- overloaded operators
+- property declarations
+- event declarations
+
 ---
 ***To be continued ...***
 
