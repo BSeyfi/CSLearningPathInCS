@@ -430,7 +430,57 @@ Output:
 3
 Red, Green
 ```
+---
+## Other Types
+### Delegates:
+Will be discussed later in chapter 9.
+### Pointers:
+Will be discussed later in chapter 21.
+### Special Classes:
+There  are few classes with special handling in certain circumstances like:
+  - exception classes will be discussed later in chapter 8.
+  - attribute classes that will be discussed later in chapter 15.
 
+### Anonymous Types
+#### What is the use of *anonymous types*?
+- You can encapsulate a read-only set of properties easily with *anonymous types* without defining the type.
+- They are handy when working with LINQ queries.
+- Two *anonymous types* have **same type** if they specify a sequence of properties that meet the following conditions:
+  1.  properties in the same order have the same name
+  2.  properties in the same order have the same type
+  3.  both  have the same number of properties
+
+#### How to define an anonymous type?
+After the `new` keyword, write your property(s) with their value(s) within a curly braces`{}`. As the compiler infers the type of properties we can use the `var` keyword to defining a variable as an anonymous type:
+
+```csharp
+//defining an anonymous type
+var animal      = new   { Name = "Sheep", Feet = 4 };
+//defining an array of anonymous types
+var animalArray = new[] { new { Name = "Sheep" , Feet = 4 },
+                          new { Name = "Swan"  , Feet = 2 }  };
+
+
+//===Run===
+Console.WriteLine( animal.Name  );
+Console.WriteLine(    animal    );
+Console.WriteLine(animalArray[1]);
+```
+
+Output:
+
+```
+Sheep
+{ Name = Sheep, Feet = 4 }
+{ Name = Swan, Feet = 2 }
+```
+
+#### Important Notes About Anonymous Type:
+- `null` is not supported
+- It is derived directly from the `object` class.
+- To pass it as an argument, the corresponding parameter type can be `object`.
+
+- It is recommended to use *named struct* or class to store a query result or pass an anonymous type outside the method boundaries.
 ---
 ***To be continued ...***
 
