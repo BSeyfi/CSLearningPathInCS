@@ -273,7 +273,7 @@ public class ClassX : IService1, IService2, IService3
     }
     ```
 
-  - The `private` members of an interface must have an implementation.
+  - The `private` members of an interface must have a default implementation.
   - Any member of an interface can have a *default implementation*.
   - To use a member of an interface, you should implement it in your type(like `class`) regardless of whether the member has been implemented in the `interface`(has a *default implementation*) or not.
   - All not-implemented members of an interface MUST be implemented in the target type.
