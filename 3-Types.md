@@ -255,7 +255,8 @@ public class ClassX : IService1, IService2, IService3
 ### Some important notes in using interfaces:
   - You can't declare non-static fields in interfaces.
   - You can't change the *access modifier* when implementing.
-  - You can add a `get` or `set` property implementation if it's not declared in the interface
+  - You can add a `get` or `set` property implementation if it's not declared in the interface ( not supported for explicit implemented properties)
+  
     ```csharp
     interface IZ
     {
