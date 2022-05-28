@@ -5,7 +5,7 @@
 - In this program, we have to pass some ***steps***. In each ***step**** we have to read some ***study items***, do some ***tasks***, and more.
 - As I'm learning the **C#** field, I've to read a book and some online documentation about C#.
 - I try to document what I've learned about C# in this repo.
-- This documentation contains the **Important Points** and **My Experiences** while learning about C#. 
+- This documentation contains the **Important Points** and **My Experiences** while learning about C#.
 - In the future, it can be used as a quick tutorial.
 - This repository is gradually completed and updated over time.
 > Note:
@@ -27,6 +27,10 @@
 ### 2. Step 2
 
 - #### [Chapter 3 : Types](./3-Types.md) <small>the beginning part is omitted</small>
+
+### 3. Step 3
+
+- #### [Chapter 4 : Generics](./4-Generics.md)
 
 ---
 
