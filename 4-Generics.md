@@ -103,15 +103,44 @@ Console.WriteLine($"{cNormalDouble.Number} - {cNormalDouble.Name}");
 
 We have to specify the original type we want to use instead of the `T`. As you see, we made three instances from a single generic class based on different types(`int`, `float`, `double` here). Each object instance is constructed from a **distinct class**! Yes, you're right. They use identical Generic class, but they are three different classes construced on distinct types. We made completely different classes. After constructing classes based on real types, we call them *constructed generic class*.
 
-### Advantages of the Generics
+#### Advantages of the Generics
 1. Less code
 2. Better maintenance
 3. No duplication and its potential errors
 4. ...
 
-### A few points about Generics
+#### A few points about Generics
 1. Term `T` is arbitrary. You can introduce whatever at the type signature level.
 2. C# naming convention recommends to use `T` or a PascalCased identifier started with `T` to represent a generic type parameter.(like `TKey`,`TVal`, etc)
+
+---
+### Constraints
+#### Whats are the Generic Type Constraints?
+- Constraints are some validations we put on a generic type. They're like instructions or rules to define how to deal with a generic type.
+
+- To create an instance of a generic type, you must use valid types  (which were declared by constraints); otherwise, you will get errors from the compiler.
+- To declare a *constraint*, you can add a `where T:<constraint>` in front of the type signature.
+
+```csharp
+// How To add Constraints
+public class ConstraintPR<T> where T: new()
+{
+    public T Instance;
+    public ConstraintPR()
+    {
+      Instance=new T();
+    }
+}
+```
+
+Example above shows how to define the `new()` constraint. You can replace `new()` with any valid constraint.
+
+- If we create an instance of the type `T` in the body of a generic type, we must use the `new()` constraint; Otherwise, the compiler won't let us.
+
+---
+
+-
+
 
 ---
 ***To be continued ...***
