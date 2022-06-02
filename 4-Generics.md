@@ -137,9 +137,73 @@ Example above shows how to define the `new()` constraint. You can replace `new()
 
 - If we create an instance of the type `T` in the body of a generic type, we must use the `new()` constraint; Otherwise, the compiler won't let us.
 
----
+#### Constraints Types:
+There are a few types of constraints existed:
 
--
+Constraint  |  Description
+--|--
+`where T : struct`  |  `T` must be a `struct`
+`where T : class`<br>`where T : class?` | `T` must be a `class`<br>`T` must be a nullable `class`
+`where T : notnull` |  `T` must be a non-nullable reference or value type
+`where T : <base class name>`<br>`where T : <base class name>?`| `T` must be or derive from the `<base class name>` class. It **must be** non-nullable<br>`T` must be or derive from the `<base class name>` class. It **can be** nullable or non-nullable
+`where T : <interface name>`<br>`where T : <interface name>?`  |  `T` must be or implement the `<base interface name>` interface. It can also be generic. Implementing type **must be** non-nullable<br>`T` must be or implement the `<base interface name>` interface. It can also be generic. Implementing type **can be** nullable or non-nullable
+`where T : unmanaged` |  `T` must be a non-nullable *unmanaged type* which implies struct constraints. It **can not** be combined with `struct` or `new()` constraints
+`where T : default`  |  To resolve ambiguity while **overriding** a **method** or defining an explicit interface implementation. Implying the base method is not constrained by `struct` or `class` constraints.
+`where T : new()` |  To be able to create an instance object of the type `T`inside the generic type.
+`where T : U` |  `T` must be or derive from the type argument `U`. If `U` is non-nullable then `T` **must** be non-nullable .
+
+- The `class`, `struct`, `unmanaged`, `notnull`, and `default` constraints
+  1.  cannot be combined or duplicated
+  2.  must be specified **first** in the constraints list.
+
+- `new()` constraint must be specified **last**
+
+- While using `where T : class` be cautious about `==` and `!=` operators. If you apply them to the generic argument types, they compare the references and **not values.**
+  - If you're intended to compare values, it's recommended to apply `where T : IEquatable<T>` or `where T : IComparable<T>` constraints.
+
+##### Defining Multiple constraints
+You can define multiple constraints on a single parameter or constraints for several parameters.
+1. Use one `where` clause for each parameter
+2. Separate multiple constraints for a single parameter with comma(`,`)
+3. If a generic type derives from another type, declare it by using a colon before the first `where` clause if existed.
+
+You can see an example in the following code:
+
+```csharp
+public class Test<T, U> : BaseClass, ISampleInterface
+    where T : SpecificClass, new()
+    where U : unmanaged
+{/*body*/}
+```
+
+#####  Unbounded type parameters
+Means there is no constraint used for that parameter.
+
+For an unbounded type parameter:
+  1.  You **can not** use `==` or `!=` operators.
+  2.  You can convert them from or to `System.Object`. You can also explicitly convert it to an interface type.
+  3. It is comparable to `null`. Comparing a value type argument to `null` returns `false`.
+
+##### Type Parameter as Constraint `where T : U`
+1.  It is useful when a member method has to constraint its type parameter to the defining type parameter. For example in the following code `U` is constrained to `T`.
+
+```csharp
+public class List<T>
+{
+    public void Add<U>(List<U> items) where U : T
+    {/* body */}
+}
+```
+
+2.  It's rare but useful to enforce the inheritance relationship between type parameters. Like:
+
+```csharp
+public class Sample<T, U, V, W> where T : U { }
+```
+
+
+
+
 
 
 ---
