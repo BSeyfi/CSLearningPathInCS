@@ -201,10 +201,60 @@ public class List<T>
 public class Sample<T, U, V, W> where T : U { }
 ```
 
+##### The `notnull` Constraint
+To specifying a value-type or a reference-type **must** be a non-nullable type, you can use the `notnull` constraint.
 
+- By violating this constraint, compiler will just generate a warning instead of an error.
+- The `notnull` constraint is effective in a *nullable context*. It is **not** effective in a *nullable oblivious context*.
 
+##### The `class` Constraint
+In a *nullable context* type argument **must** be a **non-nullable** reference type; **otherwise** compiler generates warning.
 
+##### The `default` Constraint
+This constraint is only applicable to overridden or explicitly implemented methods. We use it when the type parameter is neither known as a reference type nor as a value type.
 
+```csharp
+public class Parent
+{
+    public virtual void M<T>(T? item) where T : struct { }
+    public virtual void M<T>(T? item) { } // 👈
+}
+
+public class Child : Parent
+{
+    public override void M<T>(T? item) where T : struct { }
+    public override void M<T>(T? item) where T : default { } // 👈
+}
+```
+
+##### The `unmanaged` constraint
+What is an ***unmanaged type***? Any type of the followings is *unmanaged type*:
+- `sbyte`, `byte`, `short`, `ushort`, `int`, `uint`, `long`, `ulong`, `char`, `float`, `double`, `decimal`, or `bool`
+- Any `enum` type
+- Any `pointer` type (Will be explained in later chapters)
+- Any user-defined `struct` that contains fields with the *unmanaged types* above.
+
+So, the `unmanaged` constraint specifies that the `T` must be a *non-nullable* unmanaged type. It **can not** be combined with `struct` or `new()` constraints.
+
+##### Delegate constraint
+ Both `System.Delegate` and `System.MulticastDelegate` can be used as a base class constraint in a type-safe way, which were not allowed before  C# 7.3 release.
+
+##### Enum constraint
+The `System.Enum` class can be used as a constraint. It's type-safe and is useful to cache results.
+For example, the following code, which is using not-efficient `reflection` method to retrieve an `enum` all valid values, can be used to cache and make a dictionary from this values. After a single time caching, the dictionary can be called without any performance implication. Cool!
+
+```csharp
+public static Dictionary<int, string> EnumNamedValues<T>()
+  where T : System.Enum
+{
+    var result = new Dictionary<int, string>();
+    var values = Enum.GetValues(typeof(T));
+
+    foreach (int item in values)
+        result.Add(item, Enum.GetName(typeof(T), item)!);
+    return result;
+}
+```
 
 ---
 ***To be continued ...***
