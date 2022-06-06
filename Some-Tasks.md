@@ -20,6 +20,9 @@
 ### 2. Step 2  
 - [task 2 - about dotPeek](./some-tasks/step2-task2-dotPeek.md)
 
+### 3. Step 3  
+- [task 3 - C# Generics vs. C++ Templates](./some-tasks/step3-task3-C%23%20generics%20vs%20C%2B%2B%20templates.md)
+
 ---
 
 ***to be continued . . .***
