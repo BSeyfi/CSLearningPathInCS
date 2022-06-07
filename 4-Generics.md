@@ -257,6 +257,55 @@ public static Dictionary<int, string> EnumNamedValues<T>()
 ```
 
 ---
+### Zero-Like Values
+#### What is the `default` value?
+The CLR fills all the fields in a newly constructed object or `struct` with zero or zero-like value. This process also occurs for elements of an array during initialization.
+
+We call these zero-like values the default values.
+You can see the default value for any type in the table below:
+
+Type  |  Default Value
+--|--
+  reference types|  `null`
+built-in numeric types  |  `0`
+`bool`  | `false`  
+`char`  |  `\0`
+`enum`  |  `(<enum type name>)0` zero casts to the enum type name
+`struct`  | Creates a value and assigns the default value to all its fields
+nullable value type  |  `null` (in practice `HasValue` property gets `false` and the `Value` property gets undefined. )
+
+#### How can we use the `default` value in generics? And why?
+In a generic type, it sometimes can be beneficial to reset a value to its initial value.
+
+But in most cases, there is no way to assign a literal to a Generic type or generic parameter directly. In this case, we use the `default` operator or the `default` literal.
+
+- `default` operator
+  - `default(<type name>)` returns the default value of that type:
+
+```csharp
+public T M<T>()
+{
+    T t = default(T); // 👈
+    return t;
+}
+```
+
+- `default` literal
+  - You can assign the `default` keyword to a value ( which returns the default of the corresponding type). It is equivalent to `default(<type name>)` You can use it almost everywhere instead of a real variable.
+  You can see some examples of `default` literal usage:
+
+
+```csharp
+public GClass(int Length, T t = default) {/*body*/} // as a method optional parameter 👈
+---
+return default; // as a return value 👈
+---
+GClass<bool>(4, default); // as an argument while calling a method 👈
+---
+T t= default; // in a variable initialization or an assignment 👈
+```
+
+---
 ***To be continued ...***
 
 `#cs_internship` `#csharp` `#step3`
