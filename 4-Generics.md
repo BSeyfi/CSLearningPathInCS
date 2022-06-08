@@ -306,6 +306,56 @@ T t= default; // in a variable initialization or an assignment 👈
 ```
 
 ---
+### Generic Methods
+You can define a method in a generic format. The syntax is very similar to the generic type. Declare an ordinary method and add the type parameter(s) (`<T>` or similar generic type parameters) after the method name and before the parenthesis. You can add any constraint after the closing parenthesis like generic types.
+
+```csharp
+public static T GenericMethod<T>(T item) where T: struct
+{/*Method Body*/}
+```
+
+1. You can define a generic method in a **non-generic** type:
+
+```csharp
+public class CX
+{
+    public T GenericM<T>(T item) where T: class
+    {
+        /*body of the mehtod*/
+        return item;
+    }
+}
+```
+
+2. You can define a generic method in a **generic** type.
+  - In this condition, it's recommended that the type parameter of the method and the containing type(`class` for example) are not the same; otherwise, the type parameter of the method will hide the outer scope type parameter and you receive a warning.
+
+```csharp
+public class CX<U>               // 👈 a generic class
+{
+    public T GenericM<T>(T item) // 👈 a generic method with a different type parameter name
+    {
+        /*body of the mehtod*/
+        return item;
+    }
+    /*body of the class*/
+}
+```
+
+#### Type Inference in the Generic methods
+The compiler can **often** infer the type of the type argument of a generic method. So, you can omit the type parameter in the constructed generic type. Both method calls are the same in the following lines.
+
+```csharp
+GC.M<int>(a); // 👈
+GC.M(a);      // 👈
+
+public class GC
+{
+    public static void M<T>(T t) {/*body*/}
+}
+```
+
+---
 ***To be continued ...***
 
 `#cs_internship` `#csharp` `#step3`
