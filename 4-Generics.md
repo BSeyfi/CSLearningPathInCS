@@ -314,6 +314,7 @@ public static T GenericMethod<T>(T item) where T: struct
 {/*Method Body*/}
 ```
 
+#### How to define a *generic method* ?
 1. You can define a generic method in a **non-generic** type:
 
 ```csharp
