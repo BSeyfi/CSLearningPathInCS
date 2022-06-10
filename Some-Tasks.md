@@ -22,6 +22,7 @@
 
 ### 3. Step 3  
 - [task 3 - C# Generics vs. C++ Templates](./some-tasks/step3-task3-C%23%20generics%20vs%20C%2B%2B%20templates.md)
+- [task 4 - Tuple Types in C#](./some-tasks/step3-tuples.md)
 
 ---
 
