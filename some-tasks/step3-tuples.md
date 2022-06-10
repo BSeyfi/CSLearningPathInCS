@@ -29,10 +29,10 @@ Console.WriteLine(t.Item15);  // output: 15
 - Tuples are loosely coupled and best suited within private and internal methods. So it's better to use a class or a structure while working with public ones.
 
 ```csharp
-var (minimum, maximum) = MinMax(); // deconstruction 2️⃣ 👈
+var (minimum, maximum) = MinMax(); // 2️⃣ 👈  deconstruction
 Console.WriteLine($"int type minimum number is {minimum} , and the maximum is {maximum}");
 
-(int min, int max) MinMax() // return 1️⃣ 👈
+(int min, int max) MinMax() // 1️⃣ 👈  return
 {
     return (int.MinValue, int.MaxValue);
 }
