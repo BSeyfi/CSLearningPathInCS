@@ -1,4 +1,4 @@
-## Tuples Types in C#
+## Tuple Types in C#
 You can package multiple data elements with tuples. It has concise syntax, and it is possible to name the data members.
 To define a tuple, you should specify types and fields in parentheses separated by commas. Naming of fields is optional.
 
@@ -23,8 +23,8 @@ Console.WriteLine(t.Item15);  // output: 15
 ```
 
 ### Use cases of tuples
-- 1️⃣ You can return several elements packaged in one tuple instance from the method.
-- 2️⃣ It is also possible to *deconstruct* it into separate variables.
+- You can return several elements packaged in one tuple instance from the method.1️⃣ 
+- It is also possible to *deconstruct* it into separate variables.2️⃣ 
 - You can use tuples instead of anonymous types.
 - Tuples are loosely coupled and best suited within private and internal methods. So it's better to use a class or a structure while working with public ones.
 
