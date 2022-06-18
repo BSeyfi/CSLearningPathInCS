@@ -63,6 +63,68 @@ int[] ZeroArray(int i)
 - CLR will throw `IndexOutOfRangeException` if the index is **negative** or `index >= array Length`.
 - An array can access, initialize, read or overwrite its items. But modifying an item depends on the item's capabilities. For example, you can overwrite an *immutable* item with a new one, but you cannot change the contents of this item.
 
+#### Array Initialization
+There are many ways to initialize an array, as we talked about some of them in [Intro](#intro). There are several other ways that I have categorized as follows:
+- you can omit the number of elements while initializing
+- you can use C# type inference(`var`)
+- you can use short-hand way `new[]`.
+- initializing an array as a method argument is like initializing an array
+- You can also initialize an array item by item by using Index
+  - Non-initialized items get initialized with the `default` value of the type used to construct the array
+
+```csharp
+//Multiple ways to initialize an array
+var Seasons1 = new[] { "Spring", "Summer", "Fall", "Winter" };
+var Seasons2 = new string[] { "Spring", "Summer", "Fall", "Winter" };
+var Seasons3 = new string[4] { "Spring", "Summer", "Fall", "Winter" };
+string[] Seasons4 = new string[] { "Spring", "Summer", "Fall", "Winter" };
+string[] Seasons5 = new string[4] { "Spring", "Summer", "Fall", "Winter" };
+
+// To initialize item by item by indexing
+// item_1 is intentionally commented out to show that
+// it's not mandatory to initialize all items
+var Seasons6 = new string[4];
+Seasons6[0] = "Spring";
+//Seasons6[1]= "Summer";
+Seasons6[2] = "Fall";
+Seasons6[3] = "Winter";
+
+
+//How to initialize an array as a method argument
+PrintLength(new[] { "Spring", "Summer", "Fall", "Winter" });
+PrintLength(new string[] { "Spring", "Summer", "Fall", "Winter" });
+PrintLength(new string[4] { "Spring", "Summer", "Fall", "Winter" });
+
+void PrintLength(string[] strArr)
+{
+  Console.WriteLine(strArr.Length);
+};
+```
+
+#### Method parameter with Variable number of arguments
+Sometimes you may want a method with variable numbers of *arguments*; You may have seen this functionality in `Console.Writeline` while passing multiple arguments like: 
+
+`Console.WriteLine("{0}, {1}, {2}, {3}, {4}", 1, 2, 3, 4, 5);`
+
+To achieve this functionality, you should define the **last** parameter of a method as an **array** and use the **`params`** keyword.
+
+Now your method can accept several comma-separated arguments. 
+The below code shows how to pass a variable number of arguments. You can Pass them within the array form too.
+
+```csharp
+PrintNumberOfParams(101, 102, 103); //prints 3
+PrintNumberOfParams(new object[]{101, 102, 103}); //prints 3
+
+void PrintNumberOfParams(params object[] strArr)
+{
+    Console.WriteLine(strArr.Length);
+}
+
+```
+
+**Hint:** You can also overload the method with a known number of variables. From the point of memory allocation, it is better for the system to allocate memory fewer times. By defining an array, instead of multiple parameters, the system assigns memory one more time, and GC must free it at the end.
+
+
 ---
 ***To be continued ...***
 
