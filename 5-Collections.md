@@ -150,7 +150,7 @@ searchItemIndex = Array.LastIndexOf(sampleArray, 3); // searchItemIndex == 5
 
 Searching methods have many overloads. For example, you can search from the `startIndex` index for the `count` next items using:
   1. Syntax:  `int Array.IndexOf<T>(T[] array, T value, int startIndex, int count)`
-  2. You search in a slice of an array by using this overloaded method.
+  2. You can search in a slice of an array by using this overloaded method.
 
 ###### `Array.Find` Method and alternatives
 You can search for an item(s) (not for indexes) by introducing a customized searching method to the `Array.Find` method or its alternatives.
