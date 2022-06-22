@@ -124,6 +124,83 @@ void PrintNumberOfParams(params object[] strArr)
 
 **Hint:** You can also overload the method with a known number of variables. From the point of memory allocation, it is better for the system to allocate memory fewer times. By defining an array, instead of multiple parameters, the system assigns memory one more time, and GC must free it at the end.
 
+##### Searching and Sorting an Array
+You can search for a specific item in an array or sort items in a specified order.
+
+-  `Array.IndexOf` method searches for the first occurrence of an item in an array and returns the index number.
+- You can also search for a value that does not exist in the array or with an incompatible type. In this condition, `Array.IndexOf` returns `-1` without throwing any error.
+
+```csharp
+int searchItem = 3;
+int[] sampleArray = new[] { 1, 2, 3, 4, 5 };
+int searchItemIndex = Array.IndexOf(sampleArray, searchItem); // searchItemIndex == 2
+searchItemIndex = Array.IndexOf(sampleArray, 10);     // searchItemIndex == -1
+searchItemIndex = Array.IndexOf(sampleArray, "Word"); // searchItemIndex == -1
+```
+
+There are two main methods to search for an item in an array as below:
+- `Array.IndexOf` starts to search for an item from the lowest index ( == 0 ) toward the highest index and stops with the first match
+- `Array.LastIndexOf` starts to search for an item from the highest index (end of an array) backward to the lowest index and stops with the first match.
+
+```csharp
+int[] sampleArray = new[] { 5, 3, 4, 10, 5, 3, 2 };
+int searchItemIndex = Array.IndexOf(sampleArray, 3); // searchItemIndex == 1
+searchItemIndex = Array.LastIndexOf(sampleArray, 3); // searchItemIndex == 5
+```
+
+Searching methods have many overloads. For example, you can search from the `startIndex` index for the `count` next items using:
+  1. Syntax:  `int Array.IndexOf<T>(T[] array, T value, int startIndex, int count)`
+  2. You search in a slice of an array by using this overloaded method.
+
+###### `Array.Find` Method and alternatives
+You can search for an item(s) (not for indexes) by introducing a customized searching method to the `Array.Find` method or its alternatives.
+Suppose we want to find items larger than `2`. Let's see how we can do it:
+
+```csharp
+int[] sampleArray = new[] { 5, 3, 4, 10, 1, 2 };
+
+//by passing a delegate 
+Console.WriteLine(Array.Find(sampleArray, IsLargerThan2)); // output: 5
+
+// by using lambda expressions
+Console.WriteLine(Array.Find(sampleArray, val => val > 2));// output: 5
+
+bool IsLargerThan2(int val)
+{
+  return val > 2;
+}
+```
+
+- `Array.FindLast`: similar to `Array.Find` but searches in reverse order.
+- `Array.FindIndex`: searches for the item and returns the index of the first occurrence.
+- `Array.FindLastIndex`: similar to `Array.FindIndex` but searches in reverse order.
+- `Array.FindAll`: searches and returns all occurrence 
+
+**A few words about search performance:**
+
+Above methods, search for elements one by one in order. It's well for small arrays, but for super large Arrays, this may produce some performance issues, particularly for searches with more complex comparisons.
+
+One approach is to change the search method. For example, `Array.BinarySearch` is super fast. But to use this method, your array must be pre-sorted. And sorting an Array may consume a lot of CPU time. You should do a tradeoff and choose which approach is suitable for the current problem.
+Besides the CPU usage, there are many other factors you can bring into account, like CPU cache in use, RAM, IO, etc.
+
+###### Sorting an Array
+By using `Array.Sort`, you can sort items of an array ascending.
+You can pass a delegate or a lambda expression to do a customized sort. It is also possible to sort values by introducing a key array. You can sort either the whole array or a slice of it.
+
+```csharp
+int[] sampleArray = new int[] { 5, 3, 4, 10, 1, 2 };
+//Sort ascending
+Array.Sort(sampleArray); // sampleArray == {1, 2, 3, 4, 5, 10}
+
+sampleArray = new int[] { 5, 3, 4, 10, 1, 2 };
+//Sort descending by changing the i1, i2 comparison order
+Array.Sort(sampleArray, 
+            (a, b) => b.CompareTo(a));// sampleArray == {10, 5, 4, 3, 2, 1}
+
+sampleArray = new int[] { 5, 3, 4, 10, 1, 2 };
+//Sort from index=2 upto 3 number of items
+Array.Sort(sampleArray, 2,3);// sampleArray == {5, 3, 1, 4, 10, 2}
+```
 
 ---
 ***To be continued ...***
