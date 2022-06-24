@@ -124,7 +124,7 @@ void PrintNumberOfParams(params object[] strArr)
 
 **Hint:** You can also overload the method with a known number of variables. From the point of memory allocation, it is better for the system to allocate memory fewer times. By defining an array, instead of multiple parameters, the system assigns memory one more time, and GC must free it at the end.
 
-##### Searching and Sorting an Array
+#### Searching and Sorting an Array
 You can search for a specific item in an array or sort items in a specified order.
 
 -  `Array.IndexOf` method searches for the first occurrence of an item in an array and returns the index number.
@@ -200,6 +200,39 @@ Array.Sort(sampleArray,
 sampleArray = new int[] { 5, 3, 4, 10, 1, 2 };
 //Sort from index=2 upto 3 number of items
 Array.Sort(sampleArray, 2,3);// sampleArray == {5, 3, 1, 4, 10, 2}
+```
+
+#### Multi-dimensional Arrays
+All arrays we talked about up to here were *single-dimension* arrays. Single dimensional Array means that all items of an array are in a single row. On the other hand, a multi-dimension Array has two or more dimensions, and you need two or more index numbers to access each item.
+
+There are two types of multi-dimensional array types in C#:
+1- Jagged arrays
+2- Rectangular arrays
+
+##### Jagged arrays
+You can embed arrays in arrays. An array of arrays! Suppose you want to define an array that contains several arrays of `int`. Inner arrays can have different lengths. To create a two-dimensions jagged array, for example, you should use two pairs of brackets `[]` side by side like `[][]`. The first bracket pair is for the most outer array that contains internal arrays. The second one goes one step inward (here, Array of `int`s).
+
+```csharp
+int[][] jaggedArray = new int[3][]{
+  new int[]{1,2,3},
+  new int[]{4,5},
+  new int[]{7,8,9,10,20,30}
+};
+```
+
+C# does not limit the number of dimensions, but CLR does. When you go further than 1000 dimensions, you may encounter performance issues before reaching the maximum number of dimensions limit ( For example, `[][][]` has three dimensions. Every pair of bracket makes one dimension. )
+
+##### Rectangular arrays
+A rectangular array contains an equal number of columns in each row. This concept is expandable to higher *rank*s. All ranks are the same. You can define a rectangular array by using commas inside a pair of brackets `[,].` The main syntax is `[rank0, rank1, rank2, ... ]`. In a two-dimensional array, `rank0` is equivalent to the *rows* and `rank1` is equivalent to *columns*.
+- You should not use the `new` keyword inside the array because a rectangular array is a large array, not an array of arrays.
+- `Length` indicates the number of all elements. (in the below example, it is 3x4=12)
+- Use `GetLength` to now the size of each rank(dimension) at runtime. `<array name>.GetLength(<rank number>)`
+```csharp
+int[,] mArray = new int[3,4]{
+  {1, 2, 3, 4},
+  {4, 5, 6, 7},
+  {7, 8, 9, 10}
+};
 ```
 
 ---
