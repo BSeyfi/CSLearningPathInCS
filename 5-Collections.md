@@ -235,6 +235,55 @@ int[,] mArray = new int[3,4]{
 };
 ```
 
+#### Copying and Resizing Arrays
+- You can use the `Array.Copy` static method to copy a chunk of items from the source array to the target array with the specified number of items.
+  - You can be more specific by defining the start index to copy in source and target arrays.
+  - Source and target arrays can be the same.
+  - `Array.Copy` uses a temporary array to do the copy job so it is overlap safe.
+
+- There is also a non-static `CopyTo` method available because `Array` implements `ICollection` interface.
+
+```csharp
+int[] A = new[] { 10, 20, 30, 40, 50 };
+
+int[] B = new int[A.Length * 2]; // B == {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+int[] C = new int[A.Length * 2]; // C == {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+int[] D = new int[A.Length * 2]; // D == {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+
+// Copies A.Length numbers of items of A to B 
+Array.Copy(A, B, A.Length); //B == {10, 20, 30, 40, 50, 0, 0, 0, 0, 0}
+
+// Copies A to C from index 3 of C
+A.CopyTo(C, 3); //C == {0, 0, 0, 10, 20, 30, 40, 50, 0, 0}
+
+// Copy from A(index=1) to D(from index=2) for 2 numbers of items.
+Array.Copy(A,1,D,2,3); //D == {0, 0, 20, 30, 40, 0, 0, 0, 0, 0} 
+```
+
+- `Array.Resize` virtually resizes a single-dimensional array. As you know, the Arrays' length is fixed. This method creates a new Array, copies items into the new Array, and returns a new array accordingly.
+
+- `Array.Reverse` reverses the order of items in an array. You can reverse the order of items in an Array within a specified range. You can also use this method for *jagged arrays*.
+
+- `Array.Clear` resets itmes to their defualt values(`defualt(T)`).
+
+```csharp
+int[] A = new[] { 10, 20, 30, 40, 50 };
+int[] B = new[] { 10, 20, 30, 40, 50 };
+
+// Resize A to an arbitrary length
+Array.Resize(ref A, 9); //A == {10, 20, 30, 40, 50, 0, 0, 0, 0}
+Array.Resize(ref A, 3); //A == {10, 20, 30}
+
+//Reverse the order of items of A
+Array.Reverse(A); // A == {30, 20, 10}
+
+//Reverse the order of 3 numbers of items of B started from index=1 
+Array.Reverse(B, 1, 3); //B == {10, 40, 30, 20, 50}
+
+// Resets the items with the defualt value
+Array.Clear(A); // A == {0, 0, 0}
+```
+
 ---
 ***To be continued ...***
 
