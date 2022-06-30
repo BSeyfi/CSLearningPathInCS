@@ -284,6 +284,53 @@ Array.Reverse(B, 1, 3); //B == {10, 40, 30, 20, 50}
 Array.Clear(A); // A == {0, 0, 0}
 ```
 
+### List<T>
+You can create a variable-length sequence of items with the `List<T>` generic class. List<T> is defined in `System.Collections.Generic` namespace. 
+
+**What can you do with the `List` class?**
+- Add or remove items freely (variable size)
+- Get or set items by index number (like arrays)
+- Search, sort, and more
+
+**How to define and use a `List`?**
+Its definition syntax is very similar to arrays. Their methods are different but with similar concepts. 
+It's also possible to initialize while declaring a *List* or initialize one by one later.
+
+```csharp
+//Some ways to define and initialize List
+// lst1, lst2, and lst3 are equivallent
+
+//Compact Initialization Form
+var lst1 = new List<int> { 10, 20, 30, 40 };
+List<int> lst2 = new() { 10, 20, 30, 40 };
+
+//Verbose definition form
+var lst3 = new List<int>();
+lst3.Add(10);
+lst3.Add(20);
+lst3.Add(30);
+lst3.Add(40);
+```
+
+**Some points in using `List<T>`:**
+- You can not pass an argument with type `List<T>` to a parameter with type `T[]` (an array of type `T`). They are not the same type.
+  - Both List and Array implement various interfaces. You can enable any parameter to accept both list and array by defining the type as one of them, like `IList<T>`.
+  - Be cautious when accessing a collection by indexer. Because the indexer is a property and returns a temporary copy of the item instead of the item itself. So if the item is a mutable value type, you may fall into trouble.
+
+```csharp
+var arr = new int[] { 10, 20, 30, 40, 50 };
+var lst = new List<int> { 10, 20, 30, 40, 50 };
+
+Console.WriteLine(CountArrayOrList(arr)); // prints 5
+Console.WriteLine(CountArrayOrList(lst)); // prints 5
+
+//Any type that implements IList can be used as the argument 👍
+int CountArrayOrList(IList<int> collection)
+{
+  return collection.Count();
+}
+```
+
 ---
 ***To be continued ...***
 
