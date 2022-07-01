@@ -331,7 +331,7 @@ int CountArrayOrList(IList<int> collection)
 }
 ```
 
-**Some Important Methods Of Lists**
+#### Some Important Methods Of Lists
 - `Add`: appends a new item to the list. The size of the list automatically increases by one.
 - `AddRange`: to add several items
 - `Insert`: to insert an item in a specific index
