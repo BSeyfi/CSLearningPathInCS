@@ -331,6 +331,58 @@ int CountArrayOrList(IList<int> collection)
 }
 ```
 
+**Some Important Methods Of Lists**
+- `Add`: appends a new item to the list. The size of the list automatically increases by one.
+- `AddRange`: to add several items
+- `Insert`: to insert an item in a specific index
+- `InsertRange`: to insert several items in a specific index
+- `Remove`: to remove the first occurrence of an item if there exists any
+- `RemoveAt`: to remove the item with a specific index number
+- `RemoveRange`: to remove a range of indexes
+- `Count`: returns the number of items in a list
+
+---
+```csharp
+List<int> A = new(); // A == {}
+
+//Add an item
+A.Add(10); // A == {10}
+
+//Add several items
+A.AddRange(new[] { 20, 30 }); // A == {10, 20, 30}
+
+//Insert an item in specific index
+A.Insert(1, 15); // A == {10, 15, 20, 30}
+
+//Insert several items at specific index
+A.InsertRange(1, new[] { 12, 14 }); // A == {10, 12, 14, 15, 20, 30}
+
+//To remove the first occurrence of an item
+A.Remove(500); // Nothing changes because 500 not exists in A
+A.Remove(12); // A = {10, 14, 15, 20, 30}
+
+//To remove item with index==3
+A.RemoveAt(3); // A = {10, 14, 15, 30}
+
+//To remove from index 0 for 2 numbers of items
+A.RemoveRange(0, 2); // A = {15, 30}
+
+System.Console.WriteLine(A.Count()); // prints 2
+```
+
+There is no need to define size while creating a list. A list automatically changes the underlying array size and capacity for storing the items. However, you can pre-define the initial capacity.
+Capacity and size are not the same.
+- `Capacity`: The list's underlying array size means how many items the list can fit without auto-resizing
+- `Count`: Returns the number of items that exist in the list
+
+```csharp
+var B = new List<int>(20); // Creates Capacity == 20 but Count == 0
+B[19] = 1000; // ❌ Runtime error because no item is accessible
+
+var C = new List<int>(new int[20]); //initialize with an array of length == 20 so now 20 items are accessible
+C[19] = 1000; // ✅ Works!
+```
+
 ---
 ***To be continued ...***
 
