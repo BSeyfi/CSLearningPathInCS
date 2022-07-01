@@ -341,7 +341,6 @@ int CountArrayOrList(IList<int> collection)
 - `RemoveRange`: to remove a range of indexes
 - `Count`: returns the number of items in a list
 
----
 ```csharp
 List<int> A = new(); // A == {}
 
