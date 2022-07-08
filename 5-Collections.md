@@ -382,6 +382,34 @@ var C = new List<int>(new int[20]); //initialize with an array of length == 20 s
 C[19] = 1000; // ✅ Works!
 ```
 
+### List and Sequence Interfaces
+##### `IEnumerable`
+- Read-Only access to the collection
+- Provides a lazy evaluation useful when dealing with SQL or LINQ queries. Lazy evaluation means that an evaluation will occur when it is needed to evaluate.
+
+**Summary of derivation and members of `IEnumerable` and related interfaces:**
+Interface Name ->|`IEnumerable<T>`|`IEnumerable`|`IEnumerator<out T>`|`IEnumerator`|`IDisposable`
+:--|:---|:---|:---|:---|:--
+Derived from Interface|`IEnumerable`|-|`IEnumerator`|-|-
+Derived from Interface|-|-|`IDisposable`|-|-
+Member Property/Method|`IEnumerator<T> GetEnumerator();`|`IEnumerator GetEnumerator();`|`T Current {get;}`|`object Current {get;}`|`void Dispose();`
+Member Property/Method|-|-|-|`bool MoveNext();`|-
+Member Property/Method|-|-|-|`void Reset();`|-
+
+**Hint**: 
+- `IDisposable` is defined in the `System`
+- `IEnumerator` is defined in the `System.Collections` 
+-  Generic interfaces are defined in `System.Collections.Generic`.
+- `Dispose` is called once an *enumerable collection* finishes (for example, in a  `foreach` loop ).
+
+#### `ICollection<T>`
+It is derived from `IEnumerable<T>` and `IEnumerable`. It provides more functionality than `IEnumerable<T>` like counting, adding, and removing items.
+
+#### `IList<T>`
+It is derived from `ICollection<T>`, `IEnumerable<T>`, and `IEnumerable`. It provides more functionality than `ICollection<T>` like accessing items by index.
+
+- `IReadOnlyList<T>`: is used for providing a read-only list. However, it is possible to define a modifiable type derived from `IReadOnlyList<T>`.
+
 ---
 ***To be continued ...***
 
