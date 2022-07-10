@@ -410,7 +410,51 @@ It is derived from `ICollection<T>`, `IEnumerable<T>`, and `IEnumerable`. It pro
 
 - `IReadOnlyList<T>`: is used for providing a read-only list. However, it is possible to define a modifiable type derived from `IReadOnlyList<T>`.
 
+### Implementing Lists and Sequences
+#### Iterators
+An iterator is a particular form of a method(including operators and get properties) that produces Enumerables -one by one- by using the `yield` contextual keyword.
+A `foreach` loop calls an iterator indefinitely until the last `yield return.` It also stops iterating when it reaches the `yield break` expression. `yield return` contextual keyword implements all methods needed in the background(like `Current,` `MoveNext,` `Dispose,` and more).
+  - An iterator that uses `yield return` might be called several times by the iterator caller.
+
+```csharp
+//foreach calls an iterator items one by one
+foreach (var item in OneByOneIterator())
+{
+  Console.WriteLine(item);
+}
+
+//Iterator Method
+IEnumerable<int> OneByOneIterator()
+{
+  yield return 10;
+  yield return 20;
+  yield return 30;
+}
+```
+
+  - As iterators are lazy, they will not evaluate the first item until it is needed. So if you want to validate them earlier, you should write a wrapper around them.
+  
+```csharp
+//How to write a wrapper Method
+
+//For validation+iterator, use Wrapper Method directly in foreach
+IEnumerable<T> Wrapper(parameters)
+{
+  //validate parameters or anything else
+  //you can throw an exception or do anything needed
+
+  //At last, if validation is confirmed, you can call the main iterator
+  return IteratorCore(parameters);
+}
+
+IEnumerable<T> IteratorCore(parameters)
+{
+  //body of iterator//
+}
+```
+
 ---
 ***To be continued ...***
 
 `#cs_internship` `#csharp` `#step4`
+
