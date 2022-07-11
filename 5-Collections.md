@@ -453,6 +453,32 @@ IEnumerable<T> IteratorCore(parameters)
 }
 ```
 
+#### Collection
+Collections are similar to Lists with some differences. You can see the main differences in the table below:
+
+-|`Collection<T>`|`List<T>`
+:--|:---|:--
+API|Smaller|Larger
+`IndexOf` Method|✅|✅
+Searching and Sorting Methods|❌|✅
+Items Add/Remove Discovery (Notification Mechanism)|✅|❌
+
+#### Read-Only Collections
+`ReadOnlyCollection` is a non-modifiable collection. It is a wrapper around a regular collection ( like `List` collection).
+- By modifying the underlying collection, the `ReadOnlyCollection` -the wrapper- will reflect this modification.
+- `ReadOnlyCollection` is not suitable for systems that automatically map between object models and external representations(like serialization)
+
+```csharp
+//How to make a read-only collection
+var underlyingCollection = new List<int>() { 1, 2, 3 };
+var readOnlyColl = new ReadOnlyCollection<int>(underlyingCollection);
+
+underlyingCollection[0] = 10;
+Console.WriteLine(readOnlyColl[0]);// 🔔 prints 10 - Modification of the underlying collection will be reflected in the ReadOnlyCollection
+
+readOnlyColl[0] = 10;// ❌ Compile-time error -  you can not change items of a read-only collection
+```
+
 ---
 ***To be continued ...***
 
