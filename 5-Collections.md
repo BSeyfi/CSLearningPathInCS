@@ -479,6 +479,50 @@ Console.WriteLine(readOnlyColl[0]);// 🔔 prints 10 - Modification of the under
 readOnlyColl[0] = 10;// ❌ Compile-time error -  you can not change items of a read-only collection
 ```
 
+### Dictionaries
+Dictionaries in C# are very similar to real dictionaries. Every dictionary has several entries. In a real dictionary, you can find the meaning of a headword by searching for that headword lexically. So every entry has two parts: the headword (The word we are looking for its meaning) and the definition (the meaning of that headword). Dictionaries in C# have similar concepts. A `Dictionary` can contain several entries. 
+Each entry has a *Key* equivalent to the headword and a *Value*  equivalent to the definition. In a real dictionary, all data may be in strings, but dictionaries in C# are consisted of `object`s. So keys or values can be of any type.
+
+**Very Important Point: Keys must be unique in dictionaries.**
+
+**Dictionary types:**
+- `Dictionary<TKey, TValue>` : Regular dictionry
+- `IDictionary<TKey, TValue>` : Dictionary Interface
+- `IReadOnlyDictionary<TKey, TValue>` : Read-Only Dictionary Interface
+
+```csharp
+//How to initialize a dictionary in a single line
+var dic = new Dictionary<String, int>{ {"car",4}, {"truck",18}, {"bike",5} };
+```
+
+**How to lookup for a value:**
+
+You can get or set an entry's value by providing its key. 
+
+Methods to lookup for values by keys|Usage|Description|Example|Common Exceptions
+:--|:---|:---|:---|:--
+`[Tkey]`|indexer get|get value by its key. Throws `KeyNotFoundException` if the key is not existed|`dic["cat"]`|`KeyNotFoundException`
+`TryGetValue(TKey, out TValue)`|Check the key existance and get the value|Method returns true if `TKey` existed otherwist returns false without throwing `KeyNotFoundException` exception. `TValue` gets the corresponding value of the `TKey`| `int val;` `TryGetValue("cat", out val);`|-
+`ContainsKey(TKey)`|Just checks the key existence|returns `true` if `TKey` exists. It is **inefficent** for existing `TKey` because you should read twice, one for checking the key existence and one for reading the item.|`bool isContainKey = ContainsKey("cat");`|-
+
+Methods to set key-value pair|Usage| Description|Example|Common Exception
+:--|:---|:---|:---|:--
+`Add(Tkey,TValue)`|Adds a key-value pair|adds the pair if the key is not existed otherwise throws exception|`dic.Add("truck",18)`|`System.ArgumentException`
+`[TKey] = TValue`|indexer set|Adds a new key-value pair if the `TKey` is not existed otherwise modifies the existed key-value pair silently| `dic[TKey] = TValue`|-
+
+- Dictionaries rely on hashes for fast lookup. So the key's type must have a well-implemented hash method (Strings have a great hash method implementation)
+
+#### Sorted Dictionaries
+Sorted Dictionary always keeps key-value pairs sorted. It does not rely on hashes, but as the dictionary items are sorted, retrieving them is also fast.
+- Adding and removing entries is more costly than a regular `Dictionary`.
+
+Sorted Dictionary Type Name|Add/Remove Item Complexity|Memory Usage|Special Features
+:--|:---|:---|:--
+`SortedDictionary<TKey, TValue>`|O(log n)|Significantly more than `SortedList<TKey, TValue> |-
+`SortedList<TKey, TValue>`|O(n)|-|retreiving keys or values by index number is possible
+
+Both `SortedDictionary<TKey, TValue>` and `SortedList<TKey, TValue>` have their own advantages and disadvantages, as mentioned in the table above. But they both have less efficient than regular `Dictionary`, so use them if you need them.
+
 ---
 ***To be continued ...***
 
