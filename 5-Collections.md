@@ -102,13 +102,13 @@ void PrintLength(string[] strArr)
 ```
 
 #### Method parameter with Variable number of arguments
-Sometimes you may want a method with variable numbers of *arguments*; You may have seen this functionality in `Console.Writeline` while passing multiple arguments like: 
+Sometimes you may want a method with variable numbers of *arguments*; You may have seen this functionality in `Console.Writeline` while passing multiple arguments like:
 
 `Console.WriteLine("{0}, {1}, {2}, {3}, {4}", 1, 2, 3, 4, 5);`
 
 To achieve this functionality, you should define the **last** parameter of a method as an **array** and use the **`params`** keyword.
 
-Now your method can accept several comma-separated arguments. 
+Now your method can accept several comma-separated arguments.
 The below code shows how to pass a variable number of arguments. You can Pass them within the array form too.
 
 ```csharp
@@ -159,7 +159,7 @@ Suppose we want to find items larger than `2`. Let's see how we can do it:
 ```csharp
 int[] sampleArray = new[] { 5, 3, 4, 10, 1, 2 };
 
-//by passing a delegate 
+//by passing a delegate
 Console.WriteLine(Array.Find(sampleArray, IsLargerThan2)); // output: 5
 
 // by using lambda expressions
@@ -174,7 +174,7 @@ bool IsLargerThan2(int val)
 - `Array.FindLast`: similar to `Array.Find` but searches in reverse order.
 - `Array.FindIndex`: searches for the item and returns the index of the first occurrence.
 - `Array.FindLastIndex`: similar to `Array.FindIndex` but searches in reverse order.
-- `Array.FindAll`: searches and returns all occurrence 
+- `Array.FindAll`: searches and returns all occurrence
 
 **A few words about search performance:**
 
@@ -194,7 +194,7 @@ Array.Sort(sampleArray); // sampleArray == {1, 2, 3, 4, 5, 10}
 
 sampleArray = new int[] { 5, 3, 4, 10, 1, 2 };
 //Sort descending by changing the i1, i2 comparison order
-Array.Sort(sampleArray, 
+Array.Sort(sampleArray,
             (a, b) => b.CompareTo(a));// sampleArray == {10, 5, 4, 3, 2, 1}
 
 sampleArray = new int[] { 5, 3, 4, 10, 1, 2 };
@@ -250,14 +250,14 @@ int[] B = new int[A.Length * 2]; // B == {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 int[] C = new int[A.Length * 2]; // C == {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 int[] D = new int[A.Length * 2]; // D == {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
-// Copies A.Length numbers of items of A to B 
+// Copies A.Length numbers of items of A to B
 Array.Copy(A, B, A.Length); //B == {10, 20, 30, 40, 50, 0, 0, 0, 0, 0}
 
 // Copies A to C from index 3 of C
 A.CopyTo(C, 3); //C == {0, 0, 0, 10, 20, 30, 40, 50, 0, 0}
 
 // Copy from A(index=1) to D(from index=2) for 2 numbers of items.
-Array.Copy(A,1,D,2,3); //D == {0, 0, 20, 30, 40, 0, 0, 0, 0, 0} 
+Array.Copy(A,1,D,2,3); //D == {0, 0, 20, 30, 40, 0, 0, 0, 0, 0}
 ```
 
 - `Array.Resize` virtually resizes a single-dimensional array. As you know, the Arrays' length is fixed. This method creates a new Array, copies items into the new Array, and returns a new array accordingly.
@@ -277,7 +277,7 @@ Array.Resize(ref A, 3); //A == {10, 20, 30}
 //Reverse the order of items of A
 Array.Reverse(A); // A == {30, 20, 10}
 
-//Reverse the order of 3 numbers of items of B started from index=1 
+//Reverse the order of 3 numbers of items of B started from index=1
 Array.Reverse(B, 1, 3); //B == {10, 40, 30, 20, 50}
 
 // Resets the items with the defualt value
@@ -285,7 +285,7 @@ Array.Clear(A); // A == {0, 0, 0}
 ```
 
 ### List<T>
-You can create a variable-length sequence of items with the `List<T>` generic class. List<T> is defined in `System.Collections.Generic` namespace. 
+You can create a variable-length sequence of items with the `List<T>` generic class. List<T> is defined in `System.Collections.Generic` namespace.
 
 **What can you do with the `List` class?**
 - Add or remove items freely (variable size)
@@ -293,7 +293,7 @@ You can create a variable-length sequence of items with the `List<T>` generic cl
 - Search, sort, and more
 
 **How to define and use a `List`?**
-Its definition syntax is very similar to arrays. Their methods are different but with similar concepts. 
+Its definition syntax is very similar to arrays. Their methods are different but with similar concepts.
 It's also possible to initialize while declaring a *List* or initialize one by one later.
 
 ```csharp
@@ -396,9 +396,9 @@ Member Property/Method|`IEnumerator<T> GetEnumerator();`|`IEnumerator GetEnumera
 Member Property/Method|-|-|-|`bool MoveNext();`|-
 Member Property/Method|-|-|-|`void Reset();`|-
 
-**Hint**: 
+**Hint**:
 - `IDisposable` is defined in the `System`
-- `IEnumerator` is defined in the `System.Collections` 
+- `IEnumerator` is defined in the `System.Collections`
 -  Generic interfaces are defined in `System.Collections.Generic`.
 - `Dispose` is called once an *enumerable collection* finishes (for example, in a  `foreach` loop ).
 
@@ -433,7 +433,7 @@ IEnumerable<int> OneByOneIterator()
 ```
 
   - As iterators are lazy, they will not evaluate the first item until it is needed. So if you want to validate them earlier, you should write a wrapper around them.
-  
+
 ```csharp
 //How to write a wrapper Method
 
@@ -480,7 +480,7 @@ readOnlyColl[0] = 10;// ❌ Compile-time error -  you can not change items of a 
 ```
 
 ### Dictionaries
-Dictionaries in C# are very similar to real dictionaries. Every dictionary has several entries. In a real dictionary, you can find the meaning of a headword by searching for that headword lexically. So every entry has two parts: the headword (The word we are looking for its meaning) and the definition (the meaning of that headword). Dictionaries in C# have similar concepts. A `Dictionary` can contain several entries. 
+Dictionaries in C# are very similar to real dictionaries. Every dictionary has several entries. In a real dictionary, you can find the meaning of a headword by searching for that headword lexically. So every entry has two parts: the headword (The word we are looking for its meaning) and the definition (the meaning of that headword). Dictionaries in C# have similar concepts. A `Dictionary` can contain several entries.
 Each entry has a *Key* equivalent to the headword and a *Value*  equivalent to the definition. In a real dictionary, all data may be in strings, but dictionaries in C# are consisted of `object`s. So keys or values can be of any type.
 
 **Very Important Point: Keys must be unique in dictionaries.**
@@ -497,7 +497,7 @@ var dic = new Dictionary<String, int>{ {"car",4}, {"truck",18}, {"bike",5} };
 
 **How to lookup for a value:**
 
-You can get or set an entry's value by providing its key. 
+You can get or set an entry's value by providing its key.
 
 Methods to lookup for values by keys|Usage|Description|Example|Common Exceptions
 :--|:---|:---|:---|:--
@@ -523,8 +523,26 @@ Sorted Dictionary Type Name|Add/Remove Item Complexity|Memory Usage|Special Feat
 
 Both `SortedDictionary<TKey, TValue>` and `SortedList<TKey, TValue>` have their own advantages and disadvantages, as mentioned in the table above. But they both have less efficient than regular `Dictionary`, so use them if you need them.
 
+### Sets
+A *set* is a collection of **unique** objects. That's it! It can also receive an `IEnumerable` with repeated items and keep only one unique instance of each item.
+Sets in C# implement the `ISet` interface.
+
+**`HashSet`** and **`SortedSet`** are the major types that implemented `ISet`. The latter always keeps items sorted, while the former has no specific order defined for items.
+
+`ISet` interface's Methods|  description
+:--|:--
+`A.Add(T item)` |  Adds the item to `A` if it is not in the set already and returns `true`.
+`A.IsSubsetOf(B)`|Checks if `A` is subset of `B`
+`A.IsProperSubsetOf(B)`|Checks if `A` is subset of  `B` and `B` has at least one item more that `A`
+`A.UnionWith(B)`, `A.IntersectWith(B)`, `A.ExceptWith(B)`, `A.SymmetricExceptWith(B)`| To combine items of A and B in a particular way. (refer to the image)
+`A.IsSupersetOf(B)`|Checks if `A` is superset of `B`
+`A.IsProperSupersetOf(B)`|Checks if `A` is superset of  `B` and `A` has at least one item more that `A`
+`A.Overlaps(B)`  |  Checks if `A` has any items in common with `B`
+`A.SetEquals(B)`|  Checks if `A` and `B` items are all same items
+
+![Sets Combination](resources/sets.png)
+
 ---
 ***To be continued ...***
 
 `#cs_internship` `#csharp` `#step4`
-
