@@ -542,6 +542,46 @@ Sets in C# implement the `ISet` interface.
 
 ![Sets Combination](resources/sets.png)
 
+### Queue and Stack
+`Queue` and `Stack` are two types of lists that you can add or remove items in a particular way as you see in the image.
+
+
+![w:600 h:338 bg right:50%](resources/queue-stack.png)
+
+
+#### `Queue`:
+- `Enqueue(`*`item`*`)`: Adds an item to the end of the queue.
+- `Dequeue()`: Reads an item from the start point of the item (the eldest item) and removes it from the queue.
+- `Peek()`: Same as `Dequeue()` but doesn't remove the item.
+
+#### `Stack`:
+- `Push(`*`item`*`)`: Adds an item to the top of the stack.
+- `Pop()`: Reads an item from the top of the stack (the newest item) and removes it from the queue.
+- `Peek()`: Same as `Pop()` but doesn't remove the item.
+
+**Applies to both "queue" and "stack":**
+  - `ToArray()`: Converts a queue or a stack to an array.
+  - As both queue and stack implement `IEnumerable`, you can iterate over them ( by `foreach`, for example)
+  - `InvalidOperationException` will be thrown if you try to read from an empty queue or stack.
+
+![Queues and Stacks](resources/queue-stack.png)
+
+```csharp
+var queue = new Queue<string>(new[] { "A", "B", "C", "D", "E" });
+queue.Enqueue("F");
+
+// 🔔 You will get weird output if you use the Count method directly in the loop definition 
+// So I use a temp variable equal to Count, which remains persistent throughout the loop
+var qCount = queue.Count;
+for (var i = 0; i < qCount; i++)
+{
+  Console.WriteLine($"{queue.Dequeue()}"); // prints A B C D E F
+}
+
+var stack = new Stack<string>(new[] { "A", "B", "C", "D", "E" });
+Console.WriteLine($"{stack.Pop()}"); // prints E
+```
+
 ---
 ***To be continued ...***
 
