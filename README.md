@@ -26,11 +26,19 @@
 
 ### 2. Step 2
 
-- #### [Chapter 3 : Types](./3-Types.md) <small>the beginning part is omitted</small>
+- #### [Chapter 3 : Types](3-Types.md) <small>the beginning part is omitted</small>
 
 ### 3. Step 3
 
-- #### [Chapter 4 : Generics](./4-Generics.md)
+- #### [Chapter 4 : Generics](4-Generics.md)
+
+### 4. Step 4
+
+- #### [Chapter 5 : Collections](5-Collections.md)
+
+### 5. Step 5
+
+- #### [Chapter 4 : Inheritance](6-Inheritance.md)
 
 ---
 
