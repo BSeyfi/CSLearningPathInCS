@@ -87,6 +87,48 @@ class Parent : GrandParent { }
 class GrandParent { }
 ```
 
+### Interface Inheritance
+A class or an interface can inherit from one or more interfaces. A class must implement all parent interfaces and all great-grandparents interfaces. 
+
+```csharp
+interface IBase1
+{
+  void Base1Method();
+}
+
+interface IBase2
+{
+  void Base2Method();
+}
+interface IBoth : IBase1, IBase2
+{
+  void BothMethod3();
+}
+
+//A class that implements an interface must also implement the interface's ancestors.
+class ClassX : IBoth
+{
+  public void Base1Method() { }
+  public void Base2Method() { }
+  public void BothMethod3() { }
+}
+```
+
+### Inheritance in Generics   
+If you derive a **non-generic** type from a generic Type, you **must** provide the required type arguments.
+
+If you derive a **generic** type from a generic Type, you **can** use type parameters in the parent.
+  - It's **not possible** to derive from a type parameter directly.
+  - It is **possible** to derive from a generic type with a mixed version of type parameters and type arguments(like `IBase<string, T>`)
+
+```csharp
+public class GenericBase1<T> { }
+public class GenericBase2<TKey, TValue> { }
+public class NonGenericDerived : GenericBase1<string> { }
+public class GenericDerived<T> : GenericBase1<T> { }
+public class MixedDerived<T> : GenericBase2<string, T> { }
+```
+
 ---
 ***To be continued ...***
 
