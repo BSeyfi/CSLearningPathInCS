@@ -129,6 +129,21 @@ public class GenericDerived<T> : GenericBase1<T> { }
 public class MixedDerived<T> : GenericBase2<string, T> { }
 ```
 
+### System.Object
+`Object` is the default base class for any class defined without any base class. Even `struct`s are derived indirectly from `Object`. Almost any type is derived directly or indirectly from `Object`, but a few Types like pointers are not.
+
+Interfaces are not derived from `Object`. However, a reference of an interface can be implicitly converted to a reference of type `Object`.
+
+Reference to any kind of type has access to the following four methods:
+- `Equals`: compares the identity of the current object with another one by default. Many classes override this method to do a value check instead.
+- `GetHashCode`: returns an integer number that provides a reduced version of an instance members values. Keep in mind that every two instances which are equal **MUST** have identical hash codes.
+- `GetType`: returns the run-time type of the instance
+- `ToString`: provides a string representation of the type name by default or a customized string that can be based on the member variables.
+
+Object **also**  defines the following `protected` methods:
+- `Finalize`: is called just before the garbage collector removes the instance object. It is useful to do cleanup operations. 
+- `MemberWiseClone`: Returns a shallow copy of the object.
+
 ---
 ***To be continued ...***
 
