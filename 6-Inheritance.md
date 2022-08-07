@@ -144,6 +144,99 @@ Object **also**  defines the following `protected` methods:
 - `Finalize`: is called just before the garbage collector removes the instance object. It is useful to do cleanup operations. 
 - `MemberWiseClone`: Returns a shallow copy of the object.
 
+### Virtual Methods
+You can modify a `virtual` method( property, indexer, delegate, event declaration) in the derived type. If you assign a child instance object to a variable with the type of its parent, `override`d method will **not** call from the parent type(unlike redefining a new version of the same method in the child type).
+If you redefine normal or virtual method (instead of overriding) in the inherited type, you hide the base class method in the inherited one. But if you convert an inherited instance object to the base type, that method will call the base class version.
+
+overriding vs redefining a method:
+
+```csharp
+var chOver = new ChildOverrided();
+var chRedef = new ChildRedefined();
+
+chOver.M(); //prints: I'm Overrided Version
+(chOver as Parent).M(); //prints: I'm Overrided Version
+
+chRedef.M(); //prints: I'm Redefined Version
+(chRedef as Parent).M(); //prints: I'm Parent Version
+
+class ChildOverrided : Parent
+{
+  //overriding the base method
+  public override void M()
+  {
+    Console.WriteLine("I'm Overrided Version");
+  }
+}
+
+class ChildRedefined : Parent
+{
+  //redefine (newing or hiding) the base method
+  new public void M()
+  {
+    Console.WriteLine("I'm Redefined Version");
+  }
+}
+
+class Parent
+{
+  public virtual void M()
+  {
+    Console.WriteLine("I'm Parent Version");
+  }
+}
+```
+
+- As you see in the above example, the derived type has no obligation to `override` or redefine the `virtual` method of the base type.
+- Unlike non-virtual methods, the decision to call a `virtual` method is made at runtime based on its actual type.
+- `static` methods can **not** be `virtual`.
+
+Another example of using `virtual` methods:
+
+```csharp
+using System;
+
+var x = new Child();
+
+x.M(); //prints: I'm Child Version
+(x as Parent).M(); //prints: I'm Parent Version
+(x as GrandPr).M(); //prints: I'm Parent Version
+(x as ParentofGrandPr).M(); //prints: I'm ParentOfGrandPr Version
+//(x as System.Object).M(); // generates compile-time Error because M is not a member of System.Object
+
+class Child : Parent
+{
+  public virtual void M()
+  {
+    Console.WriteLine("I'm Child Version");
+  }
+}
+
+class Parent : GrandPr
+{
+  public override void M()
+  {
+    Console.WriteLine("I'm Parent Version");
+  }
+}
+
+class GrandPr : ParentofGrandPr
+{
+  public virtual void M()
+  {
+    Console.WriteLine("I'm GrandPr Version");
+  }
+}
+class ParentofGrandPr : System.Object
+{
+  public virtual void M()
+  {
+    Console.WriteLine("I'm ParentOfGrandPr Version");
+  }
+}
+```
+
+
 ---
 ***To be continued ...***
 
