@@ -191,7 +191,9 @@ class Parent
 - Unlike non-virtual methods, the decision to call a `virtual` method is made at runtime based on its actual type.
 - `static` methods can **not** be `virtual`.
 
-Another example of using `virtual` methods:
+![virtual method overriding vs hiding](resources/virtual-methods.png)
+
+code for the middle part of the above image:
 
 ```csharp
 using System;
